@@ -1,0 +1,76 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="container">
+                    <img [src]="student.imagePath" alt="{{ student.name }}" class="thumbnail img-responsive">
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group">
+                    <input type="text" [(ngModel)]="student.name"  class="form-control" placeholder="Nome" aria-label="Username" aria-describedby="basic-addon1" #nameInput>
+                </div>
+                <div *ngIf="(student.P1 * 0.25) + (student.P2 * 0.25) + (student.P3 * 0.5) >= 6.2 else notaP3" style="margin-top: 8px;" class="alert alert-success" role="alert">
+                    O Aluno está Aprovado!
+                </div>
+                <ng-template #notaP3>
+                    <div *ngIf="(student.P1 * 0.25) + (student.P2 * 0.25) >= 1.2 && !p3.value else reprovado" style="margin-top: 8px;" class="alert alert-warning" role="alert">
+                        O aluno deve tirar {{ ((6.2 - (student.P1 * 0.25) - (student.P2 * 0.25)) * 2).toFixed(2) }} na P3
+                    </div>
+                </ng-template>
+                <ng-template #reprovado>
+                    <div class="alert alert-danger" role="alert" style="margin-top: 8px;">
+                        O Aluno está Reprovado!
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-xs-3">
+                <div class="container">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1">P1</span>
+                        </div>
+                        <input #p1 [(ngModel)]="student.P1" type="number" min="0" max="10" class="form-control" placeholder="Nota">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="container">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1">P2</span>
+                        </div>
+                        <input #p2 [(ngModel)]="student.P2" type="number" min="0" max="10" class="form-control" placeholder="Nota">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="container">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1">P3</span>
+                        </div>
+                        <input #p3 [(ngModel)]="student.P3" type="number" min="0" max="10" class="form-control" placeholder="Nota">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="container">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <button class="btn btn-outline-secondary" type="button" (click)="calcularMedia()">Média</button>
+                        </div>
+                        <input [(ngModel)]="student.media" type="number" min="0" max="10" readonly class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="container">
+                <button type="button" class="btn btn-outline-success">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
